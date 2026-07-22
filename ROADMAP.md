@@ -8,7 +8,7 @@ alınabilir olmalı.
 - [x] 1. Proje iskeleti
 - [x] 2. Knowledge base dosya formatı + örnek içerik
 - [x] 3. Markdown loader + chunker
-- [ ] 4. ChromaDB embedding/indexleme pipeline
+- [x] 4. ChromaDB embedding/indexleme pipeline
 - [ ] 5. LLMProvider interface + Claude implementasyonu
 - [ ] 6. RAG cevap akışı (CLI testi)
 - [ ] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı

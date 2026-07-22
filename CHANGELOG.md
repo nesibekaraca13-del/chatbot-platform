@@ -10,6 +10,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   `faq.md`, `contact.md`.
 - `KnowledgeChunk` domain varlığı ve markdown dosyalarını `##` başlıklarına göre
   parçalayıp frontmatter metadata'sını taşıyan `markdown_loader`.
+- `VectorStore` port'u ve Chroma tabanlı implementasyonu (`ChromaVectorStore`);
+  yerel/ücretsiz embedding modeli, upsert ile tekrar yüklemede kart çoğaltmama,
+  anonim telemetry kapalı.
+- `index_knowledge_base` use case'i: knowledge dosyalarını okuyup vector store'a
+  yükler.
 
 ## [0.1.0] - 2026-07-22
 ### Added
