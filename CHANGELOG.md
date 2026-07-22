@@ -3,6 +3,11 @@
 Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
+### Added
+- Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
+  `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
+- Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
+  `faq.md`, `contact.md`.
 
 ## [0.1.0] - 2026-07-22
 ### Added
