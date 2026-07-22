@@ -10,7 +10,7 @@ alınabilir olmalı.
 - [x] 3. Markdown loader + chunker
 - [x] 4. ChromaDB embedding/indexleme pipeline
 - [x] 5. LLMProvider interface + Claude implementasyonu
-- [ ] 6. RAG cevap akışı (CLI testi)
+- [x] 6. RAG cevap akışı (CLI testi)
 - [ ] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
 - [ ] 8. Konuşma geçmişi + loglama (SQLite)
 - [ ] 9. FastAPI /chat endpoint
@@ -40,8 +40,10 @@ alınabilir olmalı.
 
 ## Faz 6 — Provider Çeşitliliği
 - [ ] 25. OpenAI adapter
-- [ ] 26. Gemini adapter
-- [ ] 27. Tenant bazlı provider seçimi
+- [x] 26. Gemini adapter (Claude bakiyesi olmadan test edebilmek için Adım 6
+      sonrasında öne çekildi)
+- [ ] 27. Tenant bazlı provider seçimi (şimdilik `LLM_PROVIDER` env değişkeni
+      ile basit seçim yapılıyor, tenant config'e Faz 5'te bağlanacak)
 
 ## Faz 7 — Sonraki Dalga (ayrıca planlanacak)
 - [ ] Admin panel genişletme

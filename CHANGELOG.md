@@ -18,6 +18,19 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - `LLMProvider` port'u ve `ChatMessage` domain varlığı; Claude için
   `ClaudeProvider` implementasyonu (test edilebilirlik için istemci dışarıdan
   enjekte ediliyor).
+- `answer_question` use case'i: soruyu vector store'da arar, bulunan bilgiyi
+  sistem talimatına ekler, LLM'den cevap alır. Halüsinasyon önleme kuralı
+  sistem talimatında yer alıyor (geçici, Adım 7'de ayrı şablon dosyasına
+  taşınacak).
+- `interface/cli/ask.py`: komut satırından soru sorup uçtan uca akışı deneme
+  script'i.
+- `GeminiProvider` ve `create_llm_provider` fabrikası: `LLM_PROVIDER` ortam
+  değişkenine göre Claude/Gemini arasında seçim yapılabiliyor (Faz 6/Adım 26'nın
+  öne çekilmiş hali — Claude hesap bakiyesi olmadan uçtan uca akışı test
+  edebilmek için).
+- Uçtan uca akış gerçek Gemini API'siyle doğrulandı: sistem bilgi tabanında
+  olmayan bir soruda uydurma cevap vermek yerine doğru şekilde
+  "bilmiyorum" diyor.
 
 ## [0.1.0] - 2026-07-22
 ### Added
