@@ -9,7 +9,7 @@ alınabilir olmalı.
 - [x] 2. Knowledge base dosya formatı + örnek içerik
 - [x] 3. Markdown loader + chunker
 - [x] 4. ChromaDB embedding/indexleme pipeline
-- [ ] 5. LLMProvider interface + Claude implementasyonu
+- [x] 5. LLMProvider interface + Claude implementasyonu
 - [ ] 6. RAG cevap akışı (CLI testi)
 - [ ] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
 - [ ] 8. Konuşma geçmişi + loglama (SQLite)

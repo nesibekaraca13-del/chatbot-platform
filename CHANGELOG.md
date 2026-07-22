@@ -15,6 +15,9 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   anonim telemetry kapalı.
 - `index_knowledge_base` use case'i: knowledge dosyalarını okuyup vector store'a
   yükler.
+- `LLMProvider` port'u ve `ChatMessage` domain varlığı; Claude için
+  `ClaudeProvider` implementasyonu (test edilebilirlik için istemci dışarıdan
+  enjekte ediliyor).
 
 ## [0.1.0] - 2026-07-22
 ### Added
