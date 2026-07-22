@@ -8,6 +8,8 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
   `faq.md`, `contact.md`.
+- `KnowledgeChunk` domain varlığı ve markdown dosyalarını `##` başlıklarına göre
+  parçalayıp frontmatter metadata'sını taşıyan `markdown_loader`.
 
 ## [0.1.0] - 2026-07-22
 ### Added

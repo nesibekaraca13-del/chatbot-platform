@@ -7,7 +7,7 @@ alınabilir olmalı.
 ## Faz 1 — Tek Kanal, Tek Tenant, Lokal Çekirdek
 - [x] 1. Proje iskeleti
 - [x] 2. Knowledge base dosya formatı + örnek içerik
-- [ ] 3. Markdown loader + chunker
+- [x] 3. Markdown loader + chunker
 - [ ] 4. ChromaDB embedding/indexleme pipeline
 - [ ] 5. LLMProvider interface + Claude implementasyonu
 - [ ] 6. RAG cevap akışı (CLI testi)
