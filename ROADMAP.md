@@ -21,7 +21,7 @@ alınabilir olmalı.
 - [x] 12. Çoklu sayfa crawling (robots.txt uyumlu)
 - [x] 13. HTML → temiz metin extraction
 - [x] 14. Draft knowledge dosyası üretimi
-- [ ] 15. Review & approve akışı → commit + re-index
+- [x] 15. Review & approve akışı → commit + re-index
 
 ## Faz 3 — Bilgi Yönetimi
 - [ ] 16. Knowledge listeleme/görüntüleme API

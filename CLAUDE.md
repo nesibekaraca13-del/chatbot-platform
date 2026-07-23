@@ -2,18 +2,21 @@
 
 Bu dosya, bu repoda çalışırken Claude Code'un uyması gereken kuralları içerir.
 
-## Süreç (her adım için zorunlu)
+## Süreç
 
-1. Problemi analiz et.
-2. Alternatif çözümleri değerlendir.
-3. Seçilen çözümü ve nedenini açıkla.
-4. Gerekirse mimari diyagram oluştur.
-5. Yazılacak/değiştirilecek dosyaları listele.
-6. Kullanıcıdan onay al.
-7. Onaydan sonra kodu yaz.
+Kullanıcı teknik değil ve her adımda onay istenmesini istemiyor — bunu tekrar
+sormaya gerek yok, bu kural zaten bunu yansıtıyor.
 
-Onay alınmadan kod yazma. Büyük değişiklikleri tek seferde yapma — ROADMAP.md'deki
-adımları tek tek, sırayla uygula.
+- Rutin adımlarda (ROADMAP'teki bir sonraki maddeyi uygulamak, test yazmak, küçük
+  düzeltmeler/hata giderme): kısaca analiz et, ne yaptığını sade dille özetle,
+  onay beklemeden doğrudan uygula ve test et.
+- Sadece gerçekten önemli veya geri alınması zor kararlarda onay sor: yeni bir
+  mimari yaklaşım, veri kaybına yol açabilecek işlemler, ROADMAP kapsamının
+  dışına çıkan genişletmeler, önemli bir bağımlılık/yön değişikliği.
+- Büyük değişiklikleri tek seferde yapma — ROADMAP.md'deki adımları tek tek,
+  sırayla uygula, her birini test et.
+- Kullanıcı kod bilmiyor: her adımın sonunda ne yapıldığını kısa ve sade bir
+  dille özetle (teknik jargon yerine analoji/örnek kullan).
 
 ## Mimari Kurallar
 

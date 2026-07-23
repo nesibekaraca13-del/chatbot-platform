@@ -65,6 +65,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   dönüştürüyor; her taslakta kaynak adresi (`source_url`) bulunuyor. Üretilen
   taslakların `markdown_loader` ile de doğru okunduğu test edildi. Gerçek bir
   siteyle (python.org) uçtan uca doğrulandı.
+- `approve_draft_knowledge` use case'i ve `crawl`/`approve` CLI komutları:
+  tarama → taslak üretme → gözden geçirme → onaylanan dosyaları `knowledge/`
+  klasörüne taşıma → otomatik yeniden indexleme akışı tamamlandı. Gerçek bir
+  siteyle uçtan uca doğrulandı. Faz 2 (otomatik içerik alma) bu adımla
+  tamamlandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added
