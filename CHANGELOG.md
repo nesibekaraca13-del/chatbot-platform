@@ -57,6 +57,9 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   ile robots.txt kurallarına uyuyor (robots.txt yoksa taramaya izin
   veriliyor). Link bulma için `BeautifulSoup` eklendi. Gerçek bir sitede
   (python.org) doğrulandı.
+- `extract_clean_text` ve `extract_title`: ham HTML'den script/stil/menü/
+  altbilgi gibi gürültüyü çıkarıp okunabilir metin ve sayfa başlığı elde
+  ediyor. Gerçek bir sayfada (python.org/about) doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added
