@@ -18,7 +18,7 @@ alınabilir olmalı.
 
 ## Faz 2 — Otomatik İçerik Alma
 - [x] 11. Tek sayfa web crawler
-- [ ] 12. Çoklu sayfa crawling (robots.txt uyumlu)
+- [x] 12. Çoklu sayfa crawling (robots.txt uyumlu)
 - [ ] 13. HTML → temiz metin extraction
 - [ ] 14. Draft knowledge dosyası üretimi
 - [ ] 15. Review & approve akışı → commit + re-index

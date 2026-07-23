@@ -52,6 +52,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - `fetch_page`: tek bir web sayfasının ham HTML içeriğini indiren fonksiyon
   (`httpx` tabanlı, test edilebilirlik için istemci dışarıdan enjekte
   edilebiliyor). Gerçek bir web adresiyle (`example.com`) doğrulandı.
+- `crawl_site`: bir başlangıç adresinden aynı domain içindeki linkleri takip
+  ederek çoklu sayfa indirme (varsayılan en fazla 20 sayfa). `RobotsChecker`
+  ile robots.txt kurallarına uyuyor (robots.txt yoksa taramaya izin
+  veriliyor). Link bulma için `BeautifulSoup` eklendi. Gerçek bir sitede
+  (python.org) doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added
