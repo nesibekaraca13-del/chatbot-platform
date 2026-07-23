@@ -13,7 +13,7 @@ alınabilir olmalı.
 - [x] 6. RAG cevap akışı (CLI testi)
 - [x] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
 - [x] 8. Konuşma geçmişi + loglama (SQLite)
-- [ ] 9. FastAPI /chat endpoint
+- [x] 9. FastAPI /chat endpoint
 - [ ] 10. Test chat widget
 
 ## Faz 2 — Otomatik İçerik Alma

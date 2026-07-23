@@ -41,6 +41,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   bu kısıtlama yalnızca firma bilgisi sorularına uygulanıyor, konuşma
   hafızasını (örn. kullanıcı adını hatırlama) artık engellemiyor — gerçek
   Gemini denemesinde tespit edilip düzeltildi.
+- `POST /chat` endpoint'i: FastAPI `Depends` ile bağımlılık enjeksiyonu
+  kullanılarak `vector_store`/`llm_provider`/`conversation_repository`'ye
+  erişiyor (gerçek API anahtarı gerektirmeden test edilebilir).
+  `conversation_id` gönderilmezse otomatik üretiliyor, gönderilirse konuşma
+  kaldığı yerden devam ediyor. Gerçek HTTP isteğiyle uçtan uca doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added
