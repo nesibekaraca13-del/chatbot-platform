@@ -46,6 +46,9 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   erişiyor (gerçek API anahtarı gerektirmeden test edilebilir).
   `conversation_id` gönderilmezse otomatik üretiliyor, gönderilirse konuşma
   kaldığı yerden devam ediyor. Gerçek HTTP isteğiyle uçtan uca doğrulandı.
+- Test sohbet ekranı (`/static/widget.html`): basit, tek dosyalık HTML/CSS/JS
+  arayüzü, gerçek tarayıcıda denendi — mesajlaşma ve konuşma hafızası
+  doğrulandı. Faz 1 bu adımla tamamlandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added

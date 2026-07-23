@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from chatbot_platform.application.use_cases.answer_question import answer_question
@@ -23,6 +24,7 @@ _KNOWLEDGE_DIR = _PROJECT_ROOT / "knowledge"
 _CHROMA_DIR = _PROJECT_ROOT / "chroma_db"
 _PROMPTS_DIR = _PROJECT_ROOT / "prompts"
 _DB_PATH = _PROJECT_ROOT / "conversations.sqlite3"
+_STATIC_DIR = Path(__file__).parent / "static"
 
 
 @asynccontextmanager
@@ -40,6 +42,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(title="Chatbot Platform", lifespan=lifespan)
+app.mount("/static", StaticFiles(directory=str(_STATIC_DIR)), name="static")
 
 
 @app.get("/health")

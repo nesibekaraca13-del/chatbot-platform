@@ -14,7 +14,7 @@ alınabilir olmalı.
 - [x] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
 - [x] 8. Konuşma geçmişi + loglama (SQLite)
 - [x] 9. FastAPI /chat endpoint
-- [ ] 10. Test chat widget
+- [x] 10. Test chat widget
 
 ## Faz 2 — Otomatik İçerik Alma
 - [ ] 11. Tek sayfa web crawler
