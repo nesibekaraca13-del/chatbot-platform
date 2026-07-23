@@ -24,6 +24,9 @@ class _FakeVectorStore(VectorStore):
     def count(self) -> int:
         return 0
 
+    def clear(self) -> None:
+        pass
+
 
 class _FakeLLMProvider(LLMProvider):
     def generate(self, system_prompt: str, messages: list[ChatMessage]) -> str:

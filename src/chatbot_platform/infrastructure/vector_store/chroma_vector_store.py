@@ -58,6 +58,11 @@ class ChromaVectorStore(VectorStore):
     def count(self) -> int:
         return self._collection.count()
 
+    def clear(self) -> None:
+        existing_ids = self._collection.get()["ids"]
+        if existing_ids:
+            self._collection.delete(ids=existing_ids)
+
     @staticmethod
     def _chunk_id(chunk: KnowledgeChunk) -> str:
         return f"{chunk.source_file}::{chunk.heading}"

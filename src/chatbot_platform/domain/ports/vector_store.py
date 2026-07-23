@@ -12,3 +12,6 @@ class VectorStore(ABC):
 
     @abstractmethod
     def count(self) -> int: ...
+
+    @abstractmethod
+    def clear(self) -> None: ...

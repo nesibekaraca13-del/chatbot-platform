@@ -74,6 +74,13 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   dosyalarının özetini (kategori, dil, son güncelleme, başlık sayısı) ve tek
   bir dosyanın tam içeriğini döndürüyor. Dosya adı doğrulaması (path
   traversal koruması) dahil. Gerçek proje verisiyle doğrulandı.
+- `PUT /knowledge/{filename}` ve `DELETE /knowledge/{filename}` endpoint'leri:
+  dosya oluşturma/güncelleme/silme, ardından otomatik yeniden indexleme.
+- **Düzeltme:** `VectorStore`'a `clear()` eklendi; `index_knowledge_base`
+  artık önce hafızayı temizleyip sonra yeniden yüklüyor. Önceden sadece
+  upsert yapıldığı için silinen dosyaların bilgi kartları hafızada
+  (ChromaDB) kalıyordu — artık silme işlemi hem dosyayı hem hafızadaki
+  kaydı temizliyor. Gerçek ChromaDB ile uçtan uca doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added

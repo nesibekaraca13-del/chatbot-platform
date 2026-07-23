@@ -27,6 +27,9 @@ class _FakeVectorStore(VectorStore):
     def count(self) -> int:
         return len(self._chunks)
 
+    def clear(self) -> None:
+        self._chunks = []
+
 
 class _FakeLLMProvider(LLMProvider):
     def __init__(self, response_text: str) -> None:

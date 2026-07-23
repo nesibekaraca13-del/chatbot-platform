@@ -25,7 +25,7 @@ alınabilir olmalı.
 
 ## Faz 3 — Bilgi Yönetimi
 - [x] 16. Knowledge listeleme/görüntüleme API
-- [ ] 17. Ekle/güncelle/sil API + otomatik re-index
+- [x] 17. Ekle/güncelle/sil API + otomatik re-index
 - [ ] 18. Minimal admin arayüzü
 
 ## Faz 4 — Çoklu Kanal

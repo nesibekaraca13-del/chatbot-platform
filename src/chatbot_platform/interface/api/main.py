@@ -9,9 +9,11 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from chatbot_platform.application.use_cases.answer_question import answer_question
+from chatbot_platform.application.use_cases.delete_knowledge_file import delete_knowledge_file
 from chatbot_platform.application.use_cases.get_knowledge_file import get_knowledge_file_content
 from chatbot_platform.application.use_cases.index_knowledge_base import index_knowledge_base
 from chatbot_platform.application.use_cases.list_knowledge_files import list_knowledge_files
+from chatbot_platform.application.use_cases.save_knowledge_file import save_knowledge_file
 from chatbot_platform.domain.ports.conversation_repository import ConversationRepository
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
@@ -97,6 +99,37 @@ def get_knowledge_file(
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail="Dosya bulunamadı") from exc
     return KnowledgeFileContent(filename=filename, content=content)
+
+
+class SaveKnowledgeFileRequest(BaseModel):
+    content: str
+
+
+@app.put("/knowledge/{filename}", status_code=204)
+def save_knowledge(
+    filename: str,
+    save_request: SaveKnowledgeFileRequest,
+    knowledge_dir: Path = Depends(get_knowledge_dir),
+    vector_store: VectorStore = Depends(get_vector_store),
+) -> None:
+    try:
+        save_knowledge_file(knowledge_dir, filename, save_request.content, vector_store)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Geçersiz dosya adı") from exc
+
+
+@app.delete("/knowledge/{filename}", status_code=204)
+def delete_knowledge(
+    filename: str,
+    knowledge_dir: Path = Depends(get_knowledge_dir),
+    vector_store: VectorStore = Depends(get_vector_store),
+) -> None:
+    try:
+        delete_knowledge_file(knowledge_dir, filename, vector_store)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Geçersiz dosya adı") from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Dosya bulunamadı") from exc
 
 
 class ChatRequest(BaseModel):

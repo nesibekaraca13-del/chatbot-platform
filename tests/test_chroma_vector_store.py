@@ -32,3 +32,13 @@ def test_search_returns_relevant_category(tmp_path: Path) -> None:
 
     assert len(results) == 3
     assert any(chunk.category == "prices" for chunk in results)
+
+
+def test_clear_removes_all_indexed_chunks(tmp_path: Path) -> None:
+    store = ChromaVectorStore(persist_directory=tmp_path)
+    index_knowledge_base(KNOWLEDGE_DIR, store)
+    assert store.count() > 0
+
+    store.clear()
+
+    assert store.count() == 0

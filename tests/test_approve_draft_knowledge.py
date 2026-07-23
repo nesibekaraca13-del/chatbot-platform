@@ -20,6 +20,9 @@ class _FakeVectorStore(VectorStore):
     def count(self) -> int:
         return len(self.indexed)
 
+    def clear(self) -> None:
+        self.indexed = []
+
 
 def _write_draft(path: Path, heading: str) -> None:
     path.write_text(
