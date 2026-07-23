@@ -5,6 +5,9 @@ from chatbot_platform.domain.entities.chat_message import ChatMessage
 from chatbot_platform.domain.entities.knowledge_chunk import KnowledgeChunk
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
+from chatbot_platform.infrastructure.persistence.sqlite_conversation_repository import (
+    SqliteConversationRepository,
+)
 
 PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
@@ -48,12 +51,20 @@ def _make_chunk(text: str, heading: str, source_file: str = "faq.md") -> Knowled
     )
 
 
-def test_answer_question_includes_retrieved_context_in_prompt() -> None:
+def test_answer_question_includes_retrieved_context_in_prompt(tmp_path: Path) -> None:
     chunk = _make_chunk("Aylık paketimiz 1000 TL'dir.", "Paket 1", "prices.md")
     vector_store = _FakeVectorStore([chunk])
     llm_provider = _FakeLLMProvider("Aylık paketimiz 1000 TL.")
+    conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
 
-    answer = answer_question("Fiyatınız nedir?", vector_store, llm_provider, PROMPTS_DIR)
+    answer = answer_question(
+        "Fiyatınız nedir?",
+        vector_store,
+        llm_provider,
+        PROMPTS_DIR,
+        conversation_repository,
+        "conv-1",
+    )
 
     assert answer == "Aylık paketimiz 1000 TL."
     assert "1000 TL" in llm_provider.last_system_prompt
@@ -61,13 +72,46 @@ def test_answer_question_includes_retrieved_context_in_prompt() -> None:
     assert vector_store.last_query == "Fiyatınız nedir?"
 
 
-def test_answer_question_respects_top_k() -> None:
+def test_answer_question_respects_top_k(tmp_path: Path) -> None:
     chunks = [_make_chunk(f"metin {i}", f"h{i}") for i in range(5)]
     vector_store = _FakeVectorStore(chunks)
     llm_provider = _FakeLLMProvider("cevap")
+    conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
 
-    answer_question("soru", vector_store, llm_provider, PROMPTS_DIR, top_k=2)
+    answer_question(
+        "soru", vector_store, llm_provider, PROMPTS_DIR, conversation_repository, "conv-1", top_k=2
+    )
 
     assert "metin 0" in llm_provider.last_system_prompt
     assert "metin 1" in llm_provider.last_system_prompt
     assert "metin 2" not in llm_provider.last_system_prompt
+
+
+def test_answer_question_uses_and_updates_conversation_history(tmp_path: Path) -> None:
+    vector_store = _FakeVectorStore([])
+    llm_provider = _FakeLLMProvider("ikinci cevap")
+    conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
+    conversation_repository.append_message("conv-1", ChatMessage(role="user", content="ilk soru"))
+    conversation_repository.append_message(
+        "conv-1", ChatMessage(role="assistant", content="ilk cevap")
+    )
+
+    answer_question(
+        "ikinci soru",
+        vector_store,
+        llm_provider,
+        PROMPTS_DIR,
+        conversation_repository,
+        "conv-1",
+    )
+
+    assert llm_provider.last_messages == [
+        ChatMessage(role="user", content="ilk soru"),
+        ChatMessage(role="assistant", content="ilk cevap"),
+        ChatMessage(role="user", content="ikinci soru"),
+    ]
+    updated_history = conversation_repository.get_history("conv-1")
+    assert updated_history[-2:] == [
+        ChatMessage(role="user", content="ikinci soru"),
+        ChatMessage(role="assistant", content="ikinci cevap"),
+    ]

@@ -6,12 +6,17 @@ from dotenv import load_dotenv
 from chatbot_platform.application.use_cases.answer_question import answer_question
 from chatbot_platform.application.use_cases.index_knowledge_base import index_knowledge_base
 from chatbot_platform.infrastructure.llm.provider_factory import create_llm_provider
+from chatbot_platform.infrastructure.persistence.sqlite_conversation_repository import (
+    SqliteConversationRepository,
+)
 from chatbot_platform.infrastructure.vector_store.chroma_vector_store import ChromaVectorStore
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 _KNOWLEDGE_DIR = _PROJECT_ROOT / "knowledge"
 _CHROMA_DIR = _PROJECT_ROOT / "chroma_db"
 _PROMPTS_DIR = _PROJECT_ROOT / "prompts"
+_DB_PATH = _PROJECT_ROOT / "conversations.sqlite3"
+_CLI_CONVERSATION_ID = "cli-demo"
 
 
 def main() -> None:
@@ -26,7 +31,18 @@ def main() -> None:
     index_knowledge_base(_KNOWLEDGE_DIR, vector_store)
 
     llm_provider = create_llm_provider()
-    print(answer_question(question, vector_store, llm_provider, _PROMPTS_DIR))
+    conversation_repository = SqliteConversationRepository(_DB_PATH)
+
+    print(
+        answer_question(
+            question,
+            vector_store,
+            llm_provider,
+            _PROMPTS_DIR,
+            conversation_repository,
+            _CLI_CONVERSATION_ID,
+        )
+    )
 
 
 if __name__ == "__main__":

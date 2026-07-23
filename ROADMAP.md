@@ -12,7 +12,7 @@ alınabilir olmalı.
 - [x] 5. LLMProvider interface + Claude implementasyonu
 - [x] 6. RAG cevap akışı (CLI testi)
 - [x] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
-- [ ] 8. Konuşma geçmişi + loglama (SQLite)
+- [x] 8. Konuşma geçmişi + loglama (SQLite)
 - [ ] 9. FastAPI /chat endpoint
 - [ ] 10. Test chat widget
 

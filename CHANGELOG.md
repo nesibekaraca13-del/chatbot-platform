@@ -33,6 +33,14 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   "bilmiyorum" diyor.
 - Sistem promptu koddan `prompts/system_prompt.j2` dosyasına taşındı; Jinja2
   tabanlı `render_system_prompt` ile render ediliyor.
+- `ConversationRepository` port'u ve SQLite implementasyonu
+  (`SqliteConversationRepository`): konuşma geçmişi kalıcı olarak saklanıyor,
+  `answer_question` artık geçmişi LLM'e gönderip yeni mesajları kaydediyor
+  (gönderilen geçmiş son 20 mesajla sınırlı, veritabanı kaydı tam kalıyor).
+- Sistem promptundaki "sadece Bilgi Kaynağı'nı kullan" kuralı netleştirildi:
+  bu kısıtlama yalnızca firma bilgisi sorularına uygulanıyor, konuşma
+  hafızasını (örn. kullanıcı adını hatırlama) artık engellemiyor — gerçek
+  Gemini denemesinde tespit edilip düzeltildi.
 
 ## [0.1.0] - 2026-07-22
 ### Added
