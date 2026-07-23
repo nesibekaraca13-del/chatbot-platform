@@ -20,7 +20,7 @@ alınabilir olmalı.
 - [x] 11. Tek sayfa web crawler
 - [x] 12. Çoklu sayfa crawling (robots.txt uyumlu)
 - [x] 13. HTML → temiz metin extraction
-- [ ] 14. Draft knowledge dosyası üretimi
+- [x] 14. Draft knowledge dosyası üretimi
 - [ ] 15. Review & approve akışı → commit + re-index
 
 ## Faz 3 — Bilgi Yönetimi

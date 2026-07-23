@@ -60,6 +60,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - `extract_clean_text` ve `extract_title`: ham HTML'den script/stil/menü/
   altbilgi gibi gürültüyü çıkarıp okunabilir metin ve sayfa başlığı elde
   ediyor. Gerçek bir sayfada (python.org/about) doğrulandı.
+- `generate_draft_knowledge_files`: taranan sayfaları, mevcut knowledge
+  formatına (frontmatter + `##` başlık) uygun taslak `.md` dosyalarına
+  dönüştürüyor; her taslakta kaynak adresi (`source_url`) bulunuyor. Üretilen
+  taslakların `markdown_loader` ile de doğru okunduğu test edildi. Gerçek bir
+  siteyle (python.org) uçtan uca doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added
