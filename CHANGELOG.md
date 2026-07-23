@@ -81,6 +81,10 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   upsert yapıldığı için silinen dosyaların bilgi kartları hafızada
   (ChromaDB) kalıyordu — artık silme işlemi hem dosyayı hem hafızadaki
   kaydı temizliyor. Gerçek ChromaDB ile uçtan uca doğrulandı.
+- Minimal admin arayüzü (`/static/admin.html`): knowledge dosyalarını listeleme,
+  görüntüleme, düzenleyip kaydetme, silme ve yeni dosya oluşturma. Gerçek
+  tarayıcıda denendi (oluşturma + silme uçtan uca doğrulandı). Faz 3 (bilgi
+  yönetimi) bu adımla tamamlandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added

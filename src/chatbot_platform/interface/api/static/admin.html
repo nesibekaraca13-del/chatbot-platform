@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Bilgi Yönetimi</title>
+<style>
+  body { font-family: sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px; }
+  .layout { display: flex; gap: 24px; }
+  #file-list { width: 260px; border: 1px solid #ccc; border-radius: 8px; padding: 8px; height: 500px; overflow-y: auto; }
+  #file-list .file-item { padding: 8px; border-radius: 6px; cursor: pointer; }
+  #file-list .file-item:hover { background: #f1f1f1; }
+  #file-list .file-item.active { background: #0d6efd; color: white; }
+  #editor { flex: 1; display: flex; flex-direction: column; }
+  #editor textarea { flex: 1; height: 420px; font-family: monospace; padding: 8px; }
+  #editor input[type=text] { padding: 8px; margin-bottom: 8px; }
+  .actions { margin-top: 8px; display: flex; gap: 8px; }
+  button { padding: 8px 16px; cursor: pointer; }
+  #status { margin-top: 8px; color: green; min-height: 1.2em; }
+  #status.error { color: red; }
+</style>
+</head>
+<body>
+  <h2>Bilgi Yönetimi</h2>
+  <div class="layout">
+    <div id="file-list"></div>
+    <div id="editor">
+      <input type="text" id="filename-input" placeholder="dosya-adi.md">
+      <textarea id="content-textarea" placeholder="Dosya içeriği (frontmatter + ## başlıklar)"></textarea>
+      <div class="actions">
+        <button id="save-button">Kaydet</button>
+        <button id="delete-button">Sil</button>
+        <button id="new-button">Yeni Dosya</button>
+      </div>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <script>
+    const fileListEl = document.getElementById("file-list");
+    const filenameInput = document.getElementById("filename-input");
+    const contentTextarea = document.getElementById("content-textarea");
+    const statusEl = document.getElementById("status");
+    let selectedFilename = null;
+
+    function showStatus(message, isError) {
+      statusEl.textContent = message;
+      statusEl.className = isError ? "error" : "";
+    }
+
+    async function loadFileList() {
+      const response = await fetch("/knowledge");
+      const files = await response.json();
+      fileListEl.innerHTML = "";
+      files.forEach((file) => {
+        const item = document.createElement("div");
+        item.className = "file-item" + (file.filename === selectedFilename ? " active" : "");
+        item.textContent = `${file.filename} (${file.category}, ${file.heading_count} başlık)`;
+        item.addEventListener("click", () => selectFile(file.filename));
+        fileListEl.appendChild(item);
+      });
+    }
+
+    async function selectFile(filename) {
+      selectedFilename = filename;
+      filenameInput.value = filename;
+      filenameInput.disabled = true;
+      const response = await fetch(`/knowledge/${encodeURIComponent(filename)}`);
+      const data = await response.json();
+      contentTextarea.value = data.content;
+      showStatus("");
+      loadFileList();
+    }
+
+    document.getElementById("new-button").addEventListener("click", () => {
+      selectedFilename = null;
+      filenameInput.value = "";
+      filenameInput.disabled = false;
+      contentTextarea.value = "---\ncategory: \nlanguage: tr\nlast_updated: \n---\n\n## Başlık\n\nİçerik\n";
+      showStatus("");
+      loadFileList();
+    });
+
+    document.getElementById("save-button").addEventListener("click", async () => {
+      const filename = filenameInput.value.trim();
+      if (!filename) {
+        showStatus("Dosya adı gerekli.", true);
+        return;
+      }
+      try {
+        const response = await fetch(`/knowledge/${encodeURIComponent(filename)}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: contentTextarea.value }),
+        });
+        if (!response.ok) throw new Error("Kaydetme başarısız");
+        selectedFilename = filename;
+        filenameInput.disabled = true;
+        showStatus("Kaydedildi ve hafıza güncellendi.");
+        loadFileList();
+      } catch (error) {
+        showStatus("Hata: " + error.message, true);
+      }
+    });
+
+    document.getElementById("delete-button").addEventListener("click", async () => {
+      if (!selectedFilename) {
+        showStatus("Silinecek bir dosya seçin.", true);
+        return;
+      }
+      if (!confirm(`${selectedFilename} silinsin mi?`)) return;
+      try {
+        const response = await fetch(`/knowledge/${encodeURIComponent(selectedFilename)}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) throw new Error("Silme başarısız");
+        showStatus("Silindi ve hafıza güncellendi.");
+        selectedFilename = null;
+        filenameInput.value = "";
+        filenameInput.disabled = false;
+        contentTextarea.value = "";
+        loadFileList();
+      } catch (error) {
+        showStatus("Hata: " + error.message, true);
+      }
+    });
+
+    loadFileList();
+  </script>
+</body>
+</html>
