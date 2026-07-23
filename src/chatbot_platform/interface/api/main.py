@@ -4,12 +4,14 @@ from pathlib import Path
 from uuid import uuid4
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from chatbot_platform.application.use_cases.answer_question import answer_question
+from chatbot_platform.application.use_cases.get_knowledge_file import get_knowledge_file_content
 from chatbot_platform.application.use_cases.index_knowledge_base import index_knowledge_base
+from chatbot_platform.application.use_cases.list_knowledge_files import list_knowledge_files
 from chatbot_platform.domain.ports.conversation_repository import ConversationRepository
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
@@ -60,6 +62,41 @@ def get_llm_provider(request: Request) -> LLMProvider:
 
 def get_conversation_repository(request: Request) -> ConversationRepository:
     return request.app.state.conversation_repository
+
+
+def get_knowledge_dir() -> Path:
+    return _KNOWLEDGE_DIR
+
+
+class KnowledgeFileSummary(BaseModel):
+    filename: str
+    category: str
+    language: str
+    last_updated: str
+    heading_count: int
+
+
+class KnowledgeFileContent(BaseModel):
+    filename: str
+    content: str
+
+
+@app.get("/knowledge", response_model=list[KnowledgeFileSummary])
+def list_knowledge(knowledge_dir: Path = Depends(get_knowledge_dir)) -> list[KnowledgeFileSummary]:
+    return [KnowledgeFileSummary(**info) for info in list_knowledge_files(knowledge_dir)]
+
+
+@app.get("/knowledge/{filename}", response_model=KnowledgeFileContent)
+def get_knowledge_file(
+    filename: str, knowledge_dir: Path = Depends(get_knowledge_dir)
+) -> KnowledgeFileContent:
+    try:
+        content = get_knowledge_file_content(knowledge_dir, filename)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Geçersiz dosya adı") from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Dosya bulunamadı") from exc
+    return KnowledgeFileContent(filename=filename, content=content)
 
 
 class ChatRequest(BaseModel):

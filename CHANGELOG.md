@@ -70,6 +70,10 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   klasörüne taşıma → otomatik yeniden indexleme akışı tamamlandı. Gerçek bir
   siteyle uçtan uca doğrulandı. Faz 2 (otomatik içerik alma) bu adımla
   tamamlandı.
+- `GET /knowledge` ve `GET /knowledge/{filename}` endpoint'leri: knowledge
+  dosyalarının özetini (kategori, dil, son güncelleme, başlık sayısı) ve tek
+  bir dosyanın tam içeriğini döndürüyor. Dosya adı doğrulaması (path
+  traversal koruması) dahil. Gerçek proje verisiyle doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added

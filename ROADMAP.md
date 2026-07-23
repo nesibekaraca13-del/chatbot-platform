@@ -24,7 +24,7 @@ alınabilir olmalı.
 - [x] 15. Review & approve akışı → commit + re-index
 
 ## Faz 3 — Bilgi Yönetimi
-- [ ] 16. Knowledge listeleme/görüntüleme API
+- [x] 16. Knowledge listeleme/görüntüleme API
 - [ ] 17. Ekle/güncelle/sil API + otomatik re-index
 - [ ] 18. Minimal admin arayüzü
 
