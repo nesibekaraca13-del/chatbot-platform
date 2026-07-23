@@ -49,6 +49,9 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - Test sohbet ekranı (`/static/widget.html`): basit, tek dosyalık HTML/CSS/JS
   arayüzü, gerçek tarayıcıda denendi — mesajlaşma ve konuşma hafızası
   doğrulandı. Faz 1 bu adımla tamamlandı.
+- `fetch_page`: tek bir web sayfasının ham HTML içeriğini indiren fonksiyon
+  (`httpx` tabanlı, test edilebilirlik için istemci dışarıdan enjekte
+  edilebiliyor). Gerçek bir web adresiyle (`example.com`) doğrulandı.
 
 ## [0.1.0] - 2026-07-22
 ### Added

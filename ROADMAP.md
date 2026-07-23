@@ -17,7 +17,7 @@ alınabilir olmalı.
 - [x] 10. Test chat widget
 
 ## Faz 2 — Otomatik İçerik Alma
-- [ ] 11. Tek sayfa web crawler
+- [x] 11. Tek sayfa web crawler
 - [ ] 12. Çoklu sayfa crawling (robots.txt uyumlu)
 - [ ] 13. HTML → temiz metin extraction
 - [ ] 14. Draft knowledge dosyası üretimi
