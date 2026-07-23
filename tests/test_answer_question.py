@@ -1,8 +1,12 @@
+from pathlib import Path
+
 from chatbot_platform.application.use_cases.answer_question import answer_question
 from chatbot_platform.domain.entities.chat_message import ChatMessage
 from chatbot_platform.domain.entities.knowledge_chunk import KnowledgeChunk
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
+
+PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
 
 class _FakeVectorStore(VectorStore):
@@ -49,7 +53,7 @@ def test_answer_question_includes_retrieved_context_in_prompt() -> None:
     vector_store = _FakeVectorStore([chunk])
     llm_provider = _FakeLLMProvider("Aylık paketimiz 1000 TL.")
 
-    answer = answer_question("Fiyatınız nedir?", vector_store, llm_provider)
+    answer = answer_question("Fiyatınız nedir?", vector_store, llm_provider, PROMPTS_DIR)
 
     assert answer == "Aylık paketimiz 1000 TL."
     assert "1000 TL" in llm_provider.last_system_prompt
@@ -62,7 +66,7 @@ def test_answer_question_respects_top_k() -> None:
     vector_store = _FakeVectorStore(chunks)
     llm_provider = _FakeLLMProvider("cevap")
 
-    answer_question("soru", vector_store, llm_provider, top_k=2)
+    answer_question("soru", vector_store, llm_provider, PROMPTS_DIR, top_k=2)
 
     assert "metin 0" in llm_provider.last_system_prompt
     assert "metin 1" in llm_provider.last_system_prompt

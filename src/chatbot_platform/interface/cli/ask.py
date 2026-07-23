@@ -11,6 +11,7 @@ from chatbot_platform.infrastructure.vector_store.chroma_vector_store import Chr
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 _KNOWLEDGE_DIR = _PROJECT_ROOT / "knowledge"
 _CHROMA_DIR = _PROJECT_ROOT / "chroma_db"
+_PROMPTS_DIR = _PROJECT_ROOT / "prompts"
 
 
 def main() -> None:
@@ -25,7 +26,7 @@ def main() -> None:
     index_knowledge_base(_KNOWLEDGE_DIR, vector_store)
 
     llm_provider = create_llm_provider()
-    print(answer_question(question, vector_store, llm_provider))
+    print(answer_question(question, vector_store, llm_provider, _PROMPTS_DIR))
 
 
 if __name__ == "__main__":

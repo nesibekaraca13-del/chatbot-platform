@@ -31,6 +31,8 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - Uçtan uca akış gerçek Gemini API'siyle doğrulandı: sistem bilgi tabanında
   olmayan bir soruda uydurma cevap vermek yerine doğru şekilde
   "bilmiyorum" diyor.
+- Sistem promptu koddan `prompts/system_prompt.j2` dosyasına taşındı; Jinja2
+  tabanlı `render_system_prompt` ile render ediliyor.
 
 ## [0.1.0] - 2026-07-22
 ### Added

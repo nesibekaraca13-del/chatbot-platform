@@ -11,7 +11,7 @@ alınabilir olmalı.
 - [x] 4. ChromaDB embedding/indexleme pipeline
 - [x] 5. LLMProvider interface + Claude implementasyonu
 - [x] 6. RAG cevap akışı (CLI testi)
-- [ ] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
+- [x] 7. Sistem prompt şablonu (Jinja2) + fallback kuralı
 - [ ] 8. Konuşma geçmişi + loglama (SQLite)
 - [ ] 9. FastAPI /chat endpoint
 - [ ] 10. Test chat widget
