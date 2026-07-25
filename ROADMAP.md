@@ -32,9 +32,10 @@ alınabilir olmalı.
 - [x] 19. Channel adapter interface
 - [x] 20a. WhatsApp adapter
 - [x] 20b. Instagram DM adapter
-- [ ] 21. Kanal bazlı conversation eşleme (webhook endpoint'leri + gerçek
-      Meta hesabıyla uçtan uca test — kullanıcının Meta Developer hesabı
-      kurması gerekiyor)
+- [x] 21. Kanal bazlı conversation eşleme (webhook endpoint'leri + kod
+      tarafı tamamlandı; gerçek Meta hesabıyla uçtan uca test kullanıcının
+      Meta Developer hesabı kurmasını ve genel erişilebilir bir adres
+      gerektiriyor — Adım 22 ile birlikte ele alınacak)
 - [ ] 22. Web sitesine gerçekten gömülebilir widget (CORS + internetten
       erişim + tek satır embed script) — Faz 4'ten sonra ele alınacak,
       kullanıcı ile netleşti (2026-07-24)

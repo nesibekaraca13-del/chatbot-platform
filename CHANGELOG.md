@@ -20,6 +20,14 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   ayrıştırıyor (kendi gönderdiğimiz mesajların "echo" olarak geri gelmesini
   yok sayıyor) ve Graph API üzerinden cevap gönderiyor. Sahte verilerle
   test edildi.
+- `handle_channel_message` use case'i: gelen kanal mesajını ayrıştırır,
+  `kanal:kullanıcı_id` şeklinde sabit bir konuşma kimliği üretir, cevabı
+  üretir ve kanal üzerinden geri gönderir.
+- `GET/POST /webhook/whatsapp` ve `GET/POST /webhook/instagram`
+  endpoint'leri: Meta'nın webhook doğrulama akışı (`hub.challenge`) ve
+  mesaj alma/cevaplama. Kanal yapılandırılmamışsa (env değişkenleri yoksa)
+  uygulama çökmüyor, ilgili endpoint 503 döndürüyor. Gerçek sunucuda
+  Meta hesabı olmadan da sorunsuz açıldığı doğrulandı.
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
