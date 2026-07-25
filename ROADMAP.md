@@ -36,9 +36,9 @@ alınabilir olmalı.
       tarafı tamamlandı; gerçek Meta hesabıyla uçtan uca test kullanıcının
       Meta Developer hesabı kurmasını ve genel erişilebilir bir adres
       gerektiriyor — Adım 22 ile birlikte ele alınacak)
-- [ ] 22. Web sitesine gerçekten gömülebilir widget (CORS + internetten
-      erişim + tek satır embed script) — Faz 4'ten sonra ele alınacak,
-      kullanıcı ile netleşti (2026-07-24)
+- [x] 22. Web sitesine gerçekten gömülebilir widget (`embed.js` + iframe
+      tabanlı yerleştirme, ngrok tüneliyle farklı bir origin'den uçtan uca
+      test edildi)
 
 ## Faz 5 — Multi-tenant Altyapı
 - [ ] 23. Tenant config modeli

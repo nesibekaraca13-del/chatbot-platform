@@ -28,6 +28,14 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   mesaj alma/cevaplama. Kanal yapılandırılmamışsa (env değişkenleri yoksa)
   uygulama çökmüyor, ilgili endpoint 503 döndürüyor. Gerçek sunucuda
   Meta hesabı olmadan da sorunsuz açıldığı doğrulandı.
+- `/static/embed.js`: herhangi bir web sitesine tek satır `<script>` etiketiyle
+  eklenebilen, sağ altta yüzen bir sohbet balonu açan/kapatan yerleştirme
+  script'i. Widget'ı bir `iframe` içinde açtığı için CORS'a gerek kalmıyor
+  (iframe kendi origin'inde çalışıyor). ngrok ile geçici bir internet
+  adresi açılıp, tamamen farklı bir origin'deki (127.0.0.1:8888) sahte bir
+  "müşteri sitesi"nde script'in doğru şekilde çalıştığı uçtan uca
+  doğrulandı. (Not: ngrok'un ücretsiz katmanı ilk ziyarette bir uyarı
+  sayfası gösteriyor — gerçek hosting'de bu olmayacak.)
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,

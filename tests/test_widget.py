@@ -17,3 +17,10 @@ def test_admin_page_is_served() -> None:
 
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
+
+
+def test_embed_script_is_served() -> None:
+    response = client.get("/static/embed.js")
+
+    assert response.status_code == 200
+    assert "javascript" in response.headers["content-type"]
