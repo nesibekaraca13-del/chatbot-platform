@@ -30,8 +30,11 @@ alınabilir olmalı.
 
 ## Faz 4 — Çoklu Kanal
 - [x] 19. Channel adapter interface
-- [ ] 20. Meta (WhatsApp + Instagram) adapter
-- [ ] 21. Kanal bazlı conversation eşleme
+- [x] 20a. WhatsApp adapter
+- [ ] 20b. Instagram DM adapter
+- [ ] 21. Kanal bazlı conversation eşleme (webhook endpoint'leri + gerçek
+      Meta hesabıyla uçtan uca test — kullanıcının Meta Developer hesabı
+      kurması gerekiyor)
 - [ ] 22. Web sitesine gerçekten gömülebilir widget (CORS + internetten
       erişim + tek satır embed script) — Faz 4'ten sonra ele alınacak,
       kullanıcı ile netleşti (2026-07-24)

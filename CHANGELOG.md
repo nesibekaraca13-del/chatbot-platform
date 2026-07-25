@@ -9,8 +9,13 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   olmadan bağımsız kullanım için).
 - `IncomingMessage` domain varlığı ve `ChannelAdapter` port'u: WhatsApp,
   Instagram gibi kanalların ortak sözleşmesi (gelen mesajı ayrıştırma +
-  mesaj gönderme). Henüz somut bir kanal implementasyonu yok (Adım 20'de
-  gelecek).
+  mesaj gönderme).
+- `WhatsAppAdapter`: WhatsApp Cloud API webhook formatını ayrıştırıyor
+  (metin mesajlarını işliyor, durum bildirimlerini/tanınmayan formatları
+  yok sayıyor) ve Graph API üzerinden cevap gönderiyor. Meta'nın herkese
+  açık webhook formatına göre sahte verilerle test edildi — gerçek
+  hesapla uçtan uca test, kullanıcının Meta Developer/WhatsApp Business
+  hesabı kurmasını gerektiriyor (Adım 21'de ele alınacak).
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
