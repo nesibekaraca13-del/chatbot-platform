@@ -29,7 +29,7 @@ alınabilir olmalı.
 - [x] 18. Minimal admin arayüzü
 
 ## Faz 4 — Çoklu Kanal
-- [ ] 19. Channel adapter interface
+- [x] 19. Channel adapter interface
 - [ ] 20. Meta (WhatsApp + Instagram) adapter
 - [ ] 21. Kanal bazlı conversation eşleme
 - [ ] 22. Web sitesine gerçekten gömülebilir widget (CORS + internetten

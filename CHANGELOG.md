@@ -7,6 +7,10 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 - `Chatbotu_Baslat.bat`: proje klasöründe çift tıklanarak sunucuyu başlatan ve
   sohbet/admin ekranlarını tarayıcıda otomatik açan kısayol (Claude Code
   olmadan bağımsız kullanım için).
+- `IncomingMessage` domain varlığı ve `ChannelAdapter` port'u: WhatsApp,
+  Instagram gibi kanalların ortak sözleşmesi (gelen mesajı ayrıştırma +
+  mesaj gönderme). Henüz somut bir kanal implementasyonu yok (Adım 20'de
+  gelecek).
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
