@@ -4,6 +4,9 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Added
+- `Chatbotu_Baslat.bat`: proje klasöründe çift tıklanarak sunucuyu başlatan ve
+  sohbet/admin ekranlarını tarayıcıda otomatik açan kısayol (Claude Code
+  olmadan bağımsız kullanım için).
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
