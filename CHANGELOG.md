@@ -36,6 +36,12 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   "müşteri sitesi"nde script'in doğru şekilde çalıştığı uçtan uca
   doğrulandı. (Not: ngrok'un ücretsiz katmanı ilk ziyarette bir uyarı
   sayfası gösteriyor — gerçek hosting'de bu olmayacak.)
+- **Düzeltme:** `widget.html`'in düzeni (sabit 400px mesaj kutusu + 40px üst/alt
+  boşluk) yalnızca tam sayfa görünüm için uygundu; küçük bir `iframe` içine
+  sığdırılınca mesaj yazma kutusu görünür alanın dışına taşıyordu. Kullanıcı
+  tarafından gerçek sitede fark edildi. Mesaj kutusu artık kapladığı alana göre
+  esneyen (`flex`) bir yapıya çevrildi — hem tam sayfa hem gömülü kullanımda
+  doğru çalışıyor.
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
