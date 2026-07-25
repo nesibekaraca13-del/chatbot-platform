@@ -16,6 +16,10 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   açık webhook formatına göre sahte verilerle test edildi — gerçek
   hesapla uçtan uca test, kullanıcının Meta Developer/WhatsApp Business
   hesabı kurmasını gerektiriyor (Adım 21'de ele alınacak).
+- `InstagramAdapter`: Instagram DM'lerin Messenger tipi webhook formatını
+  ayrıştırıyor (kendi gönderdiğimiz mesajların "echo" olarak geri gelmesini
+  yok sayıyor) ve Graph API üzerinden cevap gönderiyor. Sahte verilerle
+  test edildi.
 - Knowledge base dosya formatı: markdown + YAML frontmatter (`category`,
   `language`, `last_updated`) ve `##` başlık bazlı bölümleme.
 - Örnek/placeholder knowledge dosyaları: `about.md`, `services.md`, `prices.md`,
