@@ -32,17 +32,20 @@ alınabilir olmalı.
 - [ ] 19. Channel adapter interface
 - [ ] 20. Meta (WhatsApp + Instagram) adapter
 - [ ] 21. Kanal bazlı conversation eşleme
+- [ ] 22. Web sitesine gerçekten gömülebilir widget (CORS + internetten
+      erişim + tek satır embed script) — Faz 4'ten sonra ele alınacak,
+      kullanıcı ile netleşti (2026-07-24)
 
 ## Faz 5 — Multi-tenant Altyapı
-- [ ] 22. Tenant config modeli
-- [ ] 23. Tenant bazlı knowledge base izolasyonu
-- [ ] 24. Webhook → tenant routing
+- [ ] 23. Tenant config modeli
+- [ ] 24. Tenant bazlı knowledge base izolasyonu
+- [ ] 25. Webhook → tenant routing
 
 ## Faz 6 — Provider Çeşitliliği
-- [ ] 25. OpenAI adapter
-- [x] 26. Gemini adapter (Claude bakiyesi olmadan test edebilmek için Adım 6
+- [ ] 26. OpenAI adapter
+- [x] 27. Gemini adapter (Claude bakiyesi olmadan test edebilmek için Adım 6
       sonrasında öne çekildi)
-- [ ] 27. Tenant bazlı provider seçimi (şimdilik `LLM_PROVIDER` env değişkeni
+- [ ] 28. Tenant bazlı provider seçimi (şimdilik `LLM_PROVIDER` env değişkeni
       ile basit seçim yapılıyor, tenant config'e Faz 5'te bağlanacak)
 
 ## Faz 7 — Sonraki Dalga (ayrıca planlanacak)
