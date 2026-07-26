@@ -41,7 +41,7 @@ alınabilir olmalı.
       test edildi)
 
 ## Faz 5 — Multi-tenant Altyapı
-- [ ] 23. Tenant config modeli
+- [x] 23. Tenant config modeli
 - [ ] 24. Tenant bazlı knowledge base izolasyonu
 - [ ] 25. Webhook → tenant routing
 

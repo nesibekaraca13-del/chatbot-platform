@@ -4,6 +4,12 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Added
+- `TenantConfig` domain varlığı ve `tenants/{tenant_id}/config.yaml` dosyalarını
+  okuyan `load_tenant_config`/`list_tenant_ids` fonksiyonları. Firma ayarları
+  (isim, tercih edilen AI sağlayıcısı) sır içermeyen bir YAML dosyasında;
+  gizli bilgiler (API anahtarları) ayrı, git'e girmeyen bir `.env` dosyasında
+  tutulacak şekilde tasarlandı. Henüz mevcut sisteme bağlanmadı (Adım 24-25'te
+  gerçek çoklu-firma izolasyonu yapılacak).
 - `Chatbotu_Baslat.bat`: proje klasöründe çift tıklanarak sunucuyu başlatan ve
   sohbet/admin ekranlarını tarayıcıda otomatik açan kısayol (Claude Code
   olmadan bağımsız kullanım için).
