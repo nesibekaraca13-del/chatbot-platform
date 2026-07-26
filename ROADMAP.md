@@ -42,7 +42,7 @@ alınabilir olmalı.
 
 ## Faz 5 — Multi-tenant Altyapı
 - [x] 23. Tenant config modeli
-- [ ] 24. Tenant bazlı knowledge base izolasyonu
+- [x] 24. Tenant bazlı knowledge base izolasyonu
 - [ ] 25. Webhook → tenant routing
 
 ## Faz 6 — Provider Çeşitliliği

@@ -10,6 +10,12 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   gizli bilgiler (API anahtarları) ayrı, git'e girmeyen bir `.env` dosyasında
   tutulacak şekilde tasarlandı. Henüz mevcut sisteme bağlanmadı (Adım 24-25'te
   gerçek çoklu-firma izolasyonu yapılacak).
+- `resolve_tenant_paths`: bir tenant_id'den, o firmaya özel knowledge klasörü
+  ve ChromaDB koleksiyon adı üretiyor (aynı `chroma_db/` klasörü içinde farklı
+  koleksiyonlar — her firma için ayrı bir Chroma veritabanı gerekmiyor).
+  Gerçek ChromaDB ile iki farklı "firma"nın bilgilerinin ve hafızasının
+  birbirine karışmadığı (arama, sayım, temizleme dahil) uçtan uca doğrulandı.
+  Çalışan uygulama henüz bu yapıya geçirilmedi (Adım 25'te).
 - `Chatbotu_Baslat.bat`: proje klasöründe çift tıklanarak sunucuyu başlatan ve
   sohbet/admin ekranlarını tarayıcıda otomatik açan kısayol (Claude Code
   olmadan bağımsız kullanım için).
