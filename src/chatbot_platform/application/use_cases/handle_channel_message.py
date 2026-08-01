@@ -14,12 +14,13 @@ def handle_channel_message(
     llm_provider: LLMProvider,
     prompts_dir: Path,
     conversation_repository: ConversationRepository,
+    tenant_id: str,
 ) -> bool:
     incoming = channel_adapter.parse_incoming(payload)
     if incoming is None:
         return False
 
-    conversation_id = f"{incoming.channel}:{incoming.external_user_id}"
+    conversation_id = f"{tenant_id}:{incoming.channel}:{incoming.external_user_id}"
     answer = answer_question(
         incoming.text,
         vector_store,

@@ -59,23 +59,59 @@ def test_handle_channel_message_sends_reply_back_through_adapter(tmp_path: Path)
         _FakeLLMProvider(),
         PROMPTS_DIR,
         conversation_repository,
+        "firma-a",
     )
 
     assert handled is True
     assert adapter.sent == [("905551234567", "Merhaba, size nasıl yardımcı olabilirim?")]
 
 
-def test_handle_channel_message_uses_channel_and_user_as_conversation_id(tmp_path: Path) -> None:
+def test_handle_channel_message_uses_tenant_channel_and_user_as_conversation_id(
+    tmp_path: Path,
+) -> None:
     incoming = IncomingMessage(channel="whatsapp", external_user_id="905551234567", text="Merhaba")
     adapter = _FakeChannelAdapter(incoming)
     conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
 
     handle_channel_message(
-        {}, adapter, _FakeVectorStore(), _FakeLLMProvider(), PROMPTS_DIR, conversation_repository
+        {},
+        adapter,
+        _FakeVectorStore(),
+        _FakeLLMProvider(),
+        PROMPTS_DIR,
+        conversation_repository,
+        "firma-a",
     )
 
-    history = conversation_repository.get_history("whatsapp:905551234567")
+    history = conversation_repository.get_history("firma-a:whatsapp:905551234567")
     assert len(history) == 2
+
+
+def test_handle_channel_message_keeps_different_tenants_isolated(tmp_path: Path) -> None:
+    incoming = IncomingMessage(channel="whatsapp", external_user_id="905551234567", text="Merhaba")
+    conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
+
+    handle_channel_message(
+        {},
+        _FakeChannelAdapter(incoming),
+        _FakeVectorStore(),
+        _FakeLLMProvider(),
+        PROMPTS_DIR,
+        conversation_repository,
+        "firma-a",
+    )
+    handle_channel_message(
+        {},
+        _FakeChannelAdapter(incoming),
+        _FakeVectorStore(),
+        _FakeLLMProvider(),
+        PROMPTS_DIR,
+        conversation_repository,
+        "firma-b",
+    )
+
+    assert len(conversation_repository.get_history("firma-a:whatsapp:905551234567")) == 2
+    assert len(conversation_repository.get_history("firma-b:whatsapp:905551234567")) == 2
 
 
 def test_handle_channel_message_ignores_unparseable_payload(tmp_path: Path) -> None:
@@ -83,7 +119,13 @@ def test_handle_channel_message_ignores_unparseable_payload(tmp_path: Path) -> N
     conversation_repository = SqliteConversationRepository(tmp_path / "test.db")
 
     handled = handle_channel_message(
-        {}, adapter, _FakeVectorStore(), _FakeLLMProvider(), PROMPTS_DIR, conversation_repository
+        {},
+        adapter,
+        _FakeVectorStore(),
+        _FakeLLMProvider(),
+        PROMPTS_DIR,
+        conversation_repository,
+        "firma-a",
     )
 
     assert handled is False

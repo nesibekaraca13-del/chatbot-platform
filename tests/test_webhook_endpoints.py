@@ -1,5 +1,3 @@
-import os
-
 import pytest
 from fastapi.testclient import TestClient
 
@@ -10,14 +8,7 @@ from chatbot_platform.domain.ports.channel_adapter import ChannelAdapter
 from chatbot_platform.domain.ports.conversation_repository import ConversationRepository
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
-from chatbot_platform.interface.api.main import (
-    app,
-    get_conversation_repository,
-    get_instagram_adapter,
-    get_llm_provider,
-    get_vector_store,
-    get_whatsapp_adapter,
-)
+from chatbot_platform.interface.api.main import TenantRuntime, app, get_conversation_repository, get_tenant_runtime
 
 
 class _FakeChannelAdapter(ChannelAdapter):
@@ -60,26 +51,33 @@ class _FakeConversationRepository(ConversationRepository):
         pass
 
 
+@pytest.fixture()
+def fake_adapter() -> _FakeChannelAdapter:
+    return _FakeChannelAdapter()
+
+
 @pytest.fixture(autouse=True)
-def _override_dependencies():
-    fake_adapter = _FakeChannelAdapter()
-    app.dependency_overrides[get_whatsapp_adapter] = lambda: fake_adapter
-    app.dependency_overrides[get_instagram_adapter] = lambda: fake_adapter
-    app.dependency_overrides[get_vector_store] = lambda: _FakeVectorStore()
-    app.dependency_overrides[get_llm_provider] = lambda: _FakeLLMProvider()
+def _override_dependencies(fake_adapter: _FakeChannelAdapter):
+    fake_tenant = TenantRuntime(
+        vector_store=_FakeVectorStore(),
+        llm_provider=_FakeLLMProvider(),
+        whatsapp_adapter=fake_adapter,
+        instagram_adapter=fake_adapter,
+        whatsapp_verify_token="expected-token",
+        instagram_verify_token="ig-token",
+    )
+    app.dependency_overrides[get_tenant_runtime] = lambda: fake_tenant
     app.dependency_overrides[get_conversation_repository] = lambda: _FakeConversationRepository()
-    yield fake_adapter
+    yield fake_tenant
     app.dependency_overrides.clear()
 
 
 client = TestClient(app)
 
 
-def test_whatsapp_webhook_verification_succeeds_with_correct_token(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("WHATSAPP_VERIFY_TOKEN", "expected-token")
-
+def test_whatsapp_webhook_verification_succeeds_with_correct_token() -> None:
     response = client.get(
-        "/webhook/whatsapp",
+        "/t/firma-a/webhook/whatsapp",
         params={"hub.mode": "subscribe", "hub.verify_token": "expected-token", "hub.challenge": "12345"},
     )
 
@@ -87,29 +85,25 @@ def test_whatsapp_webhook_verification_succeeds_with_correct_token(monkeypatch: 
     assert response.text == "12345"
 
 
-def test_whatsapp_webhook_verification_fails_with_wrong_token(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("WHATSAPP_VERIFY_TOKEN", "expected-token")
-
+def test_whatsapp_webhook_verification_fails_with_wrong_token() -> None:
     response = client.get(
-        "/webhook/whatsapp",
+        "/t/firma-a/webhook/whatsapp",
         params={"hub.mode": "subscribe", "hub.verify_token": "wrong", "hub.challenge": "12345"},
     )
 
     assert response.status_code == 403
 
 
-def test_whatsapp_webhook_post_triggers_reply(_override_dependencies) -> None:
-    response = client.post("/webhook/whatsapp", json={"text": "Merhaba"})
+def test_whatsapp_webhook_post_triggers_reply(fake_adapter: _FakeChannelAdapter) -> None:
+    response = client.post("/t/firma-a/webhook/whatsapp", json={"text": "Merhaba"})
 
     assert response.status_code == 200
-    assert _override_dependencies.sent == [("user-1", "test cevabı")]
+    assert fake_adapter.sent == [("user-1", "test cevabı")]
 
 
-def test_instagram_webhook_verification_succeeds_with_correct_token(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("INSTAGRAM_VERIFY_TOKEN", "ig-token")
-
+def test_instagram_webhook_verification_succeeds_with_correct_token() -> None:
     response = client.get(
-        "/webhook/instagram",
+        "/t/firma-a/webhook/instagram",
         params={"hub.mode": "subscribe", "hub.verify_token": "ig-token", "hub.challenge": "999"},
     )
 
@@ -117,23 +111,36 @@ def test_instagram_webhook_verification_succeeds_with_correct_token(monkeypatch:
     assert response.text == "999"
 
 
-def test_instagram_webhook_post_triggers_reply(_override_dependencies) -> None:
-    response = client.post("/webhook/instagram", json={"text": "Merhaba"})
+def test_instagram_webhook_post_triggers_reply(fake_adapter: _FakeChannelAdapter) -> None:
+    response = client.post("/t/firma-a/webhook/instagram", json={"text": "Merhaba"})
 
     assert response.status_code == 200
-    assert _override_dependencies.sent == [("user-1", "test cevabı")]
+    assert fake_adapter.sent == [("user-1", "test cevabı")]
 
 
 def test_whatsapp_webhook_returns_503_when_not_configured() -> None:
-    app.dependency_overrides.pop(get_whatsapp_adapter, None)
+    unconfigured_tenant = TenantRuntime(
+        vector_store=_FakeVectorStore(),
+        llm_provider=_FakeLLMProvider(),
+        whatsapp_adapter=None,
+        instagram_adapter=None,
+        whatsapp_verify_token=None,
+        instagram_verify_token=None,
+    )
+    app.dependency_overrides[get_tenant_runtime] = lambda: unconfigured_tenant
 
-    def _raise_unconfigured():
-        from fastapi import HTTPException
-
-        raise HTTPException(status_code=503, detail="WhatsApp yapılandırılmamış")
-
-    app.dependency_overrides[get_whatsapp_adapter] = _raise_unconfigured
-
-    response = client.post("/webhook/whatsapp", json={"text": "Merhaba"})
+    response = client.post("/t/firma-a/webhook/whatsapp", json={"text": "Merhaba"})
 
     assert response.status_code == 503
+
+
+def test_chat_returns_404_for_unknown_tenant_via_real_lookup() -> None:
+    app.dependency_overrides.pop(get_tenant_runtime, None)
+    app.state.tenants = {}
+
+    response = client.get(
+        "/t/olmayan-firma/webhook/whatsapp",
+        params={"hub.mode": "subscribe", "hub.verify_token": "x", "hub.challenge": "1"},
+    )
+
+    assert response.status_code == 404

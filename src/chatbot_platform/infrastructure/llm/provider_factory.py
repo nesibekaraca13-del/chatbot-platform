@@ -7,8 +7,8 @@ from chatbot_platform.infrastructure.llm.gemini_provider import create_gemini_pr
 _DEFAULT_PROVIDER = "claude"
 
 
-def create_llm_provider() -> LLMProvider:
-    provider_name = os.environ.get("LLM_PROVIDER", _DEFAULT_PROVIDER).lower()
+def create_llm_provider(provider_override: str | None = None) -> LLMProvider:
+    provider_name = (provider_override or os.environ.get("LLM_PROVIDER", _DEFAULT_PROVIDER)).lower()
     if provider_name == "claude":
         return create_claude_provider()
     if provider_name == "gemini":

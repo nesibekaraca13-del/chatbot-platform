@@ -3,7 +3,7 @@ from pathlib import Path
 from chatbot_platform.application.use_cases.index_knowledge_base import index_knowledge_base
 from chatbot_platform.infrastructure.vector_store.chroma_vector_store import ChromaVectorStore
 
-KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
+KNOWLEDGE_DIR = Path(__file__).parent.parent / "tenants" / "default" / "knowledge"
 
 
 def test_index_populates_the_store(tmp_path: Path) -> None:

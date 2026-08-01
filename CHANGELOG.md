@@ -16,6 +16,19 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
   Gerçek ChromaDB ile iki farklı "firma"nın bilgilerinin ve hafızasının
   birbirine karışmadığı (arama, sayım, temizleme dahil) uçtan uca doğrulandı.
   Çalışan uygulama henüz bu yapıya geçirilmedi (Adım 25'te).
+- **Çoklu firma desteği canlıya alındı.** Gerçek `knowledge/` klasörü
+  `tenants/default/knowledge/` altına taşındı; ikinci bir örnek firma
+  (`tenants/ornek-firma/`) şablon olarak eklendi. Tüm uç noktalar firma bazlı
+  hale getirildi: `POST /t/{tenant_id}/chat`,
+  `GET/POST /t/{tenant_id}/webhook/whatsapp`,
+  `GET/POST /t/{tenant_id}/webhook/instagram`. `embed.js` artık `data-tenant`
+  özniteliğinden hangi firmaya ait olduğunu okuyor. Konuşma kimlikleri
+  `{tenant_id}:...` ile başlıyor (aynı SQLite dosyası, doğal bölümleme).
+  API anahtarları (Claude/Gemini) global kalıyor, sadece sağlayıcı seçimi
+  (`config.yaml`) ve WhatsApp/Instagram anahtarları (`tenants/{id}/.env`,
+  git'e girmez) firma bazlı. Gerçek sunucuda iki farklı firmaya aynı anda
+  gerçek LLM cevabı vererek ve bilgilerinin karışmadığı doğrulanarak test
+  edildi. Faz 5 (multi-tenant altyapı) bu adımla tamamlandı.
 - `Chatbotu_Baslat.bat`: proje klasöründe çift tıklanarak sunucuyu başlatan ve
   sohbet/admin ekranlarını tarayıcıda otomatik açan kısayol (Claude Code
   olmadan bağımsız kullanım için).

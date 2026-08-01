@@ -2,7 +2,7 @@ from pathlib import Path
 
 from chatbot_platform.infrastructure.knowledge.markdown_loader import load_knowledge_base
 
-KNOWLEDGE_DIR = Path(__file__).parent.parent / "knowledge"
+KNOWLEDGE_DIR = Path(__file__).parent.parent / "tenants" / "default" / "knowledge"
 
 
 def test_loads_all_knowledge_files() -> None:

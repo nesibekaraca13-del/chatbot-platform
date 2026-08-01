@@ -1,6 +1,7 @@
 (function () {
   var currentScript = document.currentScript;
   var origin = new URL(currentScript.src).origin;
+  var tenantId = currentScript.dataset.tenant || "default";
 
   var button = document.createElement("button");
   button.setAttribute("aria-label", "Sohbeti aç/kapat");
@@ -11,7 +12,7 @@
     "box-shadow:0 2px 8px rgba(0,0,0,0.3);z-index:2147483647;";
 
   var frame = document.createElement("iframe");
-  frame.src = origin + "/static/widget.html";
+  frame.src = origin + "/static/widget.html?tenant=" + encodeURIComponent(tenantId);
   frame.title = "Chatbot";
   frame.style.cssText =
     "position:fixed;bottom:88px;right:20px;width:360px;height:520px;max-width:calc(100vw - 40px);" +

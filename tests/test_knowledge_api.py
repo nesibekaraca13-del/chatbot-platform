@@ -5,7 +5,11 @@ from fastapi.testclient import TestClient
 
 from chatbot_platform.domain.entities.knowledge_chunk import KnowledgeChunk
 from chatbot_platform.domain.ports.vector_store import VectorStore
-from chatbot_platform.interface.api.main import app, get_knowledge_dir, get_vector_store
+from chatbot_platform.interface.api.main import (
+    app,
+    get_default_knowledge_dir,
+    get_default_vector_store,
+)
 
 
 class _FakeVectorStore(VectorStore):
@@ -37,8 +41,8 @@ def knowledge_dir(tmp_path: Path) -> Path:
 
 @pytest.fixture(autouse=True)
 def _override_dependency(knowledge_dir: Path):
-    app.dependency_overrides[get_knowledge_dir] = lambda: knowledge_dir
-    app.dependency_overrides[get_vector_store] = lambda: _FakeVectorStore()
+    app.dependency_overrides[get_default_knowledge_dir] = lambda: knowledge_dir
+    app.dependency_overrides[get_default_vector_store] = lambda: _FakeVectorStore()
     yield
     app.dependency_overrides.clear()
 

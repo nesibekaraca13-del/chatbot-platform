@@ -48,9 +48,33 @@ yerine "bilmiyorum / insana yönlendiriyorum" davranışı zorunlu kılınır.
 
 ## Bilinçli Ertelenen Kararlar
 
-- Multi-tenant veri izolasyonu (SQLite → Postgres + RLS geçişi) Faz 5'te netleşecek.
 - Hybrid search (keyword + vector) fiyat gibi kesin bilgiler için ileride
   değerlendirilecek, v1'de saf vector search yeterli.
 - LangChain gibi ağır framework'ler bilinçli olarak kullanılmıyor; ince, kendi
   yazdığımız port arayüzleri tercih ediliyor (leaky abstraction ve versiyon kırılması
   riskini azaltmak için).
+
+## Multi-Tenant Mimarisi (Faz 5)
+
+- Her firma `tenants/{tenant_id}/` altında kendi klasörüne sahip: `config.yaml`
+  (isim, tercih edilen AI sağlayıcısı — sır içermez, git'e girer) + `knowledge/`
+  (o firmanın bilgi dosyaları) + opsiyonel `.env` (WhatsApp/Instagram anahtarları
+  gibi sırlar — git'e girmez, `.gitignore`'da `tenants/*/.env`).
+- **Vector store izolasyonu**: Tüm firmalar aynı `chroma_db/` klasörünü paylaşır
+  ama her firmanın kendi Chroma koleksiyonu vardır (`knowledge_{tenant_id}`) —
+  ayrı bir veritabanı dizinine gerek yok, Chroma'nın koleksiyon izolasyonu yeterli.
+- **Konuşma izolasyonu**: Tek bir SQLite dosyası paylaşılır; `conversation_id`
+  her zaman `{tenant_id}:...` ile başlar, bu da doğal bir bölümleme sağlar —
+  ayrı bir veritabanı dosyasına gerek yok.
+- **API/webhook routing**: Uç noktalar `/t/{tenant_id}/...` şeklinde firma bazlı.
+  WhatsApp/Instagram webhook URL'leri Meta'ya firma başına ayrı ayrı verilir
+  (`.../t/{tenant_id}/webhook/whatsapp`). Web sitesi widget'ı (`embed.js`)
+  `data-tenant` özniteliğinden hangi firmaya ait olduğunu okur.
+- **API anahtarları global, sağlayıcı seçimi firma bazlı**: Anthropic/Gemini API
+  anahtarları tüm platform için tek (kök `.env`), ama her firma `config.yaml`
+  üzerinden Claude veya Gemini'den birini seçebilir. WhatsApp/Instagram
+  anahtarları ise gerçekten firma bazlı (her firmanın kendi hesabı olduğu için).
+  uygulama başlangıcında (lifespan) her firma için knowledge base indexlenir ve
+  gerekli adapter'lar kurulur; yeni firma eklemek/config değiştirmek için
+  sunucunun yeniden başlatılması gerekir (v1 için kabul edilebilir, hot-reload
+  şimdilik hedeflenmiyor).

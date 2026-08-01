@@ -6,12 +6,7 @@ from chatbot_platform.domain.entities.knowledge_chunk import KnowledgeChunk
 from chatbot_platform.domain.ports.conversation_repository import ConversationRepository
 from chatbot_platform.domain.ports.llm_provider import LLMProvider
 from chatbot_platform.domain.ports.vector_store import VectorStore
-from chatbot_platform.interface.api.main import (
-    app,
-    get_conversation_repository,
-    get_llm_provider,
-    get_vector_store,
-)
+from chatbot_platform.interface.api.main import TenantRuntime, app, get_conversation_repository, get_tenant_runtime
 
 
 class _FakeVectorStore(VectorStore):
@@ -46,8 +41,15 @@ class _FakeConversationRepository(ConversationRepository):
 
 @pytest.fixture(autouse=True)
 def _override_dependencies() -> None:
-    app.dependency_overrides[get_vector_store] = lambda: _FakeVectorStore()
-    app.dependency_overrides[get_llm_provider] = lambda: _FakeLLMProvider()
+    fake_tenant = TenantRuntime(
+        vector_store=_FakeVectorStore(),
+        llm_provider=_FakeLLMProvider(),
+        whatsapp_adapter=None,
+        instagram_adapter=None,
+        whatsapp_verify_token=None,
+        instagram_verify_token=None,
+    )
+    app.dependency_overrides[get_tenant_runtime] = lambda: fake_tenant
     app.dependency_overrides[get_conversation_repository] = lambda: _FakeConversationRepository()
     yield
     app.dependency_overrides.clear()
@@ -57,7 +59,7 @@ client = TestClient(app)
 
 
 def test_chat_returns_answer_and_generates_conversation_id() -> None:
-    response = client.post("/chat", json={"message": "Merhaba"})
+    response = client.post("/t/firma-a/chat", json={"message": "Merhaba"})
 
     assert response.status_code == 200
     body = response.json()
@@ -67,7 +69,16 @@ def test_chat_returns_answer_and_generates_conversation_id() -> None:
 
 def test_chat_reuses_provided_conversation_id() -> None:
     response = client.post(
-        "/chat", json={"message": "Merhaba", "conversation_id": "conv-abc"}
+        "/t/firma-a/chat", json={"message": "Merhaba", "conversation_id": "conv-abc"}
     )
 
     assert response.json()["conversation_id"] == "conv-abc"
+
+
+def test_chat_returns_404_for_unknown_tenant() -> None:
+    app.dependency_overrides.pop(get_tenant_runtime, None)
+    app.state.tenants = {}
+
+    response = client.post("/t/olmayan-firma/chat", json={"message": "Merhaba"})
+
+    assert response.status_code == 404

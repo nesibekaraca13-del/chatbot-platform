@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 venv/
 .env
+tenants/*/.env
 *.egg-info/
 .pytest_cache/
 chroma_db/

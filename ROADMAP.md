@@ -43,7 +43,7 @@ alınabilir olmalı.
 ## Faz 5 — Multi-tenant Altyapı
 - [x] 23. Tenant config modeli
 - [x] 24. Tenant bazlı knowledge base izolasyonu
-- [ ] 25. Webhook → tenant routing
+- [x] 25. Webhook → tenant routing
 
 ## Faz 6 — Provider Çeşitliliği
 - [ ] 26. OpenAI adapter
