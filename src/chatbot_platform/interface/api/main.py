@@ -1,3 +1,4 @@
+import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -60,11 +61,32 @@ class TenantRuntime:
         self.instagram_verify_token = instagram_verify_token
 
 
+_CHANNEL_ENV_KEYS = [
+    "WHATSAPP_PHONE_NUMBER_ID",
+    "WHATSAPP_ACCESS_TOKEN",
+    "WHATSAPP_VERIFY_TOKEN",
+    "INSTAGRAM_IG_USER_ID",
+    "INSTAGRAM_ACCESS_TOKEN",
+    "INSTAGRAM_VERIFY_TOKEN",
+]
+
+
 def _load_tenant_env(tenant_dir: Path) -> dict[str, str]:
     env_path = tenant_dir / ".env"
-    if not env_path.exists():
-        return {}
-    return {key: value for key, value in dotenv_values(env_path).items() if value is not None}
+    tenant_env: dict[str, str] = {}
+    if env_path.exists():
+        tenant_env = {
+            key: value for key, value in dotenv_values(env_path).items() if value is not None
+        }
+
+    # tenants/{id}/.env dosyası deploy ortamına taşınmayabilir (gizli bilgi,
+    # git'e girmiyor); dosyada olmayan anahtarlar için process ortam
+    # değişkenlerine (örn. Railway panelinden ayarlanan) geri düşülür.
+    for key in _CHANNEL_ENV_KEYS:
+        if key not in tenant_env and key in os.environ:
+            tenant_env[key] = os.environ[key]
+
+    return tenant_env
 
 
 def _create_whatsapp_adapter(tenant_env: dict[str, str]) -> WhatsAppAdapter | None:

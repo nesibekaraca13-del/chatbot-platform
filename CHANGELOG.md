@@ -4,6 +4,11 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Added
+- Railway (veya benzeri Nixpacks tabanlı platformlar) için `Procfile` eklendi.
+  Tenant kanal anahtarları (`WHATSAPP_*`, `INSTAGRAM_*`) artık `tenants/{id}/.env`
+  dosyası yoksa process ortam değişkenlerine (örn. Railway panelinden ayarlanan)
+  geri düşüyor — böylece gizli `.env` dosyası deploy ortamına taşınmadan da tek
+  firmalık kurulumlar çalışabiliyor.
 - `TenantConfig` domain varlığı ve `tenants/{tenant_id}/config.yaml` dosyalarını
   okuyan `load_tenant_config`/`list_tenant_ids` fonksiyonları. Firma ayarları
   (isim, tercih edilen AI sağlayıcısı) sır içermeyen bir YAML dosyasında;

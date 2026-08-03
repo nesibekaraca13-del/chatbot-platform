@@ -2,8 +2,9 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-.env
-tenants/*/.env
+.env*
+!.env.example
+tenants/*/.env*
 *.egg-info/
 .pytest_cache/
 chroma_db/

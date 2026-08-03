@@ -31,3 +31,22 @@ uvicorn chatbot_platform.interface.api.main:app --reload
 ```bash
 pytest
 ```
+
+## Dağıtım (Railway)
+
+Proje bir `Procfile` içerir, Railway (veya benzeri Nixpacks tabanlı platformlar)
+GitHub reposunu bağlayıp otomatik dağıtabilir.
+
+Railway panelinde ayarlanması gereken ortam değişkenleri:
+
+- `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `LLM_PROVIDER` — global AI sağlayıcı anahtarları
+- Her firma için WhatsApp/Instagram anahtarları da (tek firma varsa) doğrudan buraya
+  eklenebilir: `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_ACCESS_TOKEN`,
+  `WHATSAPP_VERIFY_TOKEN`, `INSTAGRAM_IG_USER_ID`, `INSTAGRAM_ACCESS_TOKEN`,
+  `INSTAGRAM_VERIFY_TOKEN` — `tenants/{id}/.env` dosyası yoksa bu değerlere
+  otomatik geri düşülür.
+
+Not: ChromaDB her açılışta `knowledge/` dosyalarından yeniden oluşturulduğu için
+kalıcı disk gerekmez. `conversations.sqlite3` (konuşma geçmişi) kalıcı olmasını
+istiyorsanız Railway'de bir volume bağlanmalı; bağlanmazsa her yeniden
+başlatmada geçmiş sıfırlanır (v1 için kabul edilebilir bir sınırlama).
