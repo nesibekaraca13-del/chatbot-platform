@@ -1,6 +1,9 @@
+import logging
 import os
 
 import httpx
+
+_logger = logging.getLogger(__name__)
 
 from chatbot_platform.domain.entities.incoming_message import IncomingMessage
 from chatbot_platform.domain.ports.channel_adapter import ChannelAdapter
@@ -51,6 +54,8 @@ class WhatsAppAdapter(ChannelAdapter):
                 "text": {"body": text},
             },
         )
+        if response.is_error:
+            _logger.error("WhatsApp send_message failed: %s %s", response.status_code, response.text)
         response.raise_for_status()
 
 
