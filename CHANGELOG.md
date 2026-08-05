@@ -4,6 +4,28 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Added
+- **Railway'de canlı barındırma tamamlandı.** Sunucu artık
+  `https://web-production-949a6.up.railway.app` adresinde 7/24 çalışıyor
+  (Railway'in Railpack build sistemi `pyproject.toml`'daki bağımlılıkları
+  okumuyor, bu yüzden ayrıca bir `requirements.txt` eklendi; kendi paketimizi
+  pip ile kurmak yerine başlatma komutuna `PYTHONPATH=src` eklendi, çünkü
+  Railpack build katmanlarında kaynak kod pip install anındaki katmanda henüz
+  mevcut olmuyor). WhatsApp webhook'u bu adrese bağlanıp uçtan uca (gerçek bir
+  test numarasından mesaj → yapay zeka cevabı → WhatsApp'a geri gönderim)
+  doğrulandı.
+- `WhatsAppAdapter.send_message` artık Meta'dan gelen hata gövdesini (ör.
+  geçersiz/süresi dolmuş token detayı) logluyor — önceden sadece HTTP durum
+  kodu görünüyordu.
+- **Önemli keşif:** Meta, uygulama "yayınlanmamış" (unpublished/development)
+  durumdayken gerçek kullanıcılardan (tester olarak eklenmiş olsalar bile)
+  gelen WhatsApp mesajlarını webhook'a otomatik iletmiyor — sadece Meta
+  panelindeki "Test" butonuyla tetiklenen sahte olaylar iletiliyor. Gerçek
+  mesajlar Meta'nın kendi panelinde ("Check test webhooks") görünüyor ama
+  bize POST edilmiyor. Otomatik teslimat için uygulamanın App Review +
+  Business Verification sürecinden geçmesi gerekiyor — bu, platforma
+  kaydolacak her firma için de geçerli olacak standart bir Meta gereksinimi.
+  Bu tamamlanana kadar gerçek mesajlar, yakalanan payload sunucuya elle
+  (curl ile) tekrar gönderilerek simüle ediliyor.
 - Railway (veya benzeri Nixpacks tabanlı platformlar) için `Procfile` eklendi.
   Tenant kanal anahtarları (`WHATSAPP_*`, `INSTAGRAM_*`) artık `tenants/{id}/.env`
   dosyası yoksa process ortam değişkenlerine (örn. Railway panelinden ayarlanan)

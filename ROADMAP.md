@@ -52,6 +52,21 @@ alınabilir olmalı.
 - [ ] 28. Tenant bazlı provider seçimi (şimdilik `LLM_PROVIDER` env değişkeni
       ile basit seçim yapılıyor, tenant config'e Faz 5'te bağlanacak)
 
+## Faz 8 — Canlı Yayına Geçiş (Railway + Meta Onayı)
+- [x] 29. Railway'de canlı barındırma (Railpack build sorunları çözüldü:
+      `requirements.txt`, `PYTHONPATH=src`). Sunucu 7/24 ayakta,
+      `/health` ve WhatsApp webhook uçtan uca doğrulandı.
+- [ ] 30. Meta App Review + Business Verification. Uygulama yayınlanmadan
+      gerçek WhatsApp kullanıcılarından gelen mesajlar webhook'a otomatik
+      iletilmiyor (sadece Meta panelindeki "Test" butonu iletiliyor).
+      Bu onaylanana kadar gerçek mesajlar elle simüle ediliyor. Bu adım
+      her yeni firma/tenant kendi WhatsApp numarasını bağladığında da
+      tekrarlanacak standart bir Meta gereksinimi.
+- [ ] 31. Kalıcı (süresi dolmayan) WhatsApp erişim token'ı — Business
+      Verification sonrası bir System User oluşturup kalıcı token
+      üretilecek; şu an geçici test token'ları ~24 saatte bir manuel
+      yenileniyor.
+
 ## Faz 7 — Sonraki Dalga (ayrıca planlanacak)
 - [ ] Admin panel genişletme
 - [ ] Kullanıcı yönetimi & auth
