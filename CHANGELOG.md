@@ -4,6 +4,12 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Added
+- Instagram için de Meta App tarafında canlı ortam kurulumu yapıldı:
+  gerekli mesajlaşma izinleri eklendi, bir Instagram Business hesabı
+  bağlandı, Railway'deki `/t/default/webhook/instagram` adresi Meta
+  panelinde doğrulandı. WhatsApp'ta bulunan aynı kısıt burada da geçerli:
+  uygulama yayınlanmadan gerçek DM'ler webhook'a otomatik iletilmiyor
+  (Adım 30/32, ROADMAP).
 - **Railway'de canlı barındırma tamamlandı.** Sunucu artık
   `https://web-production-949a6.up.railway.app` adresinde 7/24 çalışıyor
   (Railway'in Railpack build sistemi `pyproject.toml`'daki bağımlılıkları

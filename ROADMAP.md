@@ -66,6 +66,13 @@ alınabilir olmalı.
       Verification sonrası bir System User oluşturup kalıcı token
       üretilecek; şu an geçici test token'ları ~24 saatte bir manuel
       yenileniyor.
+- [x] 32. Instagram tarafında da aynı kurulum: Meta App'e Instagram
+      mesajlaşma izinleri (`instagram_business_manage_messages` vb.)
+      eklendi, Instagram Business hesabı bağlandı, Railway'deki webhook
+      URL'i (`/t/default/webhook/instagram`) Meta panelinde doğrulandı
+      (yeşil tik). WhatsApp'taki gibi, gerçek DM'lerin otomatik iletilmesi
+      Adım 30'daki App Review'e bağlı — kod ve bağlantı hazır, gerçek
+      uçtan uca mesaj testi App Review sonrasına bırakıldı.
 
 ## Faz 7 — Sonraki Dalga (ayrıca planlanacak)
 - [ ] Admin panel genişletme
