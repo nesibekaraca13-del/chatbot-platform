@@ -3,6 +3,15 @@
 Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
+### Changed
+- Railway deneme süresi bitti; ücretsiz çözüm olarak sunucu kendi bilgisayarda
+  çalışıp ngrok'un ücretsiz sabit adresiyle
+  (`curry-landscape-condone.ngrok-free.dev`) internete açılıyor.
+  `Chatbotu_Baslat.bat` artık hem sunucuyu hem tüneli tek tıkla başlatıyor.
+  Adres üzerinden `/health` ve WhatsApp webhook doğrulaması (`hub.challenge`)
+  test edildi. Bilgisayar kapalıyken sistem çalışmaz; ilk gerçek müşteride
+  ücretli 7/24 sunucuya geçilecek.
+
 ### Added
 - Instagram için de Meta App tarafında canlı ortam kurulumu yapıldı:
   gerekli mesajlaşma izinleri eklendi, bir Instagram Business hesabı

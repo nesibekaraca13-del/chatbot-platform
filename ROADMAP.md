@@ -56,6 +56,8 @@ alınabilir olmalı.
 - [x] 29. Railway'de canlı barındırma (Railpack build sorunları çözüldü:
       `requirements.txt`, `PYTHONPATH=src`). Sunucu 7/24 ayakta,
       `/health` ve WhatsApp webhook uçtan uca doğrulandı.
+- [x] 29b. Railway deneme süresi bitti; geçici olarak yerel bilgisayar + ngrok
+      sabit adresi. İlk gerçek müşteride ücretli 7/24 barındırmaya dönülecek.
 - [ ] 30. Meta App Review + Business Verification. Uygulama yayınlanmadan
       gerçek WhatsApp kullanıcılarından gelen mesajlar webhook'a otomatik
       iletilmiyor (sadece Meta panelindeki "Test" butonu iletiliyor).
