@@ -4,6 +4,13 @@ Bu proje [Keep a Changelog](https://keepachangelog.com/) formatını takip eder.
 
 ## [Unreleased]
 ### Changed
+- Gerçek bir üretim WhatsApp numarası eklendi ve kalıcı (süresi dolmayan)
+  erişim token'ı üretildi — artık test numarasındaki gibi ~24 saatte bir
+  token yenilemeye gerek yok.
+- Business Verification denendi: kayıtlı şirket olmadığı için
+  e-posta/telefon/SMS/WhatsApp onay yollarının hepsi resmi kuruluş belgesi
+  istiyor; "Domain doğrulaması" ise bir domain gerektiriyor. İkisi de şu an
+  yok/istenmiyor — bu adım bilinçli olarak ertelendi (ROADMAP Adım 30).
 - Railway deneme süresi bitti; ücretsiz çözüm olarak sunucu kendi bilgisayarda
   çalışıp ngrok'un ücretsiz sabit adresiyle
   (`curry-landscape-condone.ngrok-free.dev`) internete açılıyor.

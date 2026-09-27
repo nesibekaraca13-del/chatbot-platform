@@ -64,10 +64,17 @@ alınabilir olmalı.
       Bu onaylanana kadar gerçek mesajlar elle simüle ediliyor. Bu adım
       her yeni firma/tenant kendi WhatsApp numarasını bağladığında da
       tekrarlanacak standart bir Meta gereksinimi.
-- [ ] 31. Kalıcı (süresi dolmayan) WhatsApp erişim token'ı — Business
-      Verification sonrası bir System User oluşturup kalıcı token
-      üretilecek; şu an geçici test token'ları ~24 saatte bir manuel
-      yenileniyor.
+      **Durum (2026-09-27):** Kayıtlı bir şirket yok. Business Verification'ın
+      tüm yolları (e-posta/telefon/SMS/WhatsApp ile onay) resmi kuruluş
+      belgesi istiyor; tek istisna olan "Domain doğrulaması" ise sahip
+      olunan bir domain gerektiriyor — o da şu an alınmak istenmiyor.
+      Bu adım, ya bir şirket kaydı ya da bir domain edinilene kadar
+      bilinçli olarak beklemede. Sistemin geri kalanı bundan etkilenmiyor.
+- [x] 31. Kalıcı (süresi dolmayan) WhatsApp erişim token'ı — düşündüğümüzün
+      aksine Business Verification'ı beklemiyor: gerçek bir üretim numarası
+      (Step 2'de "Register your WhatsApp phone number") eklenip
+      "Send message" görevindeki "Generate token" ile hemen üretilebiliyor.
+      Artık ~24 saatte bir yenileme gerekmiyor.
 - [x] 32. Instagram tarafında da aynı kurulum: Meta App'e Instagram
       mesajlaşma izinleri (`instagram_business_manage_messages` vb.)
       eklendi, Instagram Business hesabı bağlandı, Railway'deki webhook
